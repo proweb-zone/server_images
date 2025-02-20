@@ -1,12 +1,26 @@
 services:
-  nginx:
+  external_nginx:
     image: nginx:stable-alpine
-    container_name: nginx_images_server
+    container_name: external_nginx_img_server
     ports:
-      - ${PORT}:80
+      - ${EXTERNAL_PORT}:80
     volumes:
       - ./app:/var/www/images_server
-      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./config/nginx/external/default.conf:/etc/nginx/conf.d/default.conf
       - ./logs/nginx:/var/log/nginx
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    env_file:
+      - ./.env
+
+  inner_nginx:
+    image: nginx:stable-alpine
+    container_name: inner_nginx_img_server
+    ports:
+      - ${INNER_PORT}:80
+    volumes:
+      - ./app:/var/www/images_server
+      - ./config/nginx/inner/default.conf:/etc/nginx/conf.d/default.conf
+      - ./logs/nginx:/var/log/nginx
+    env_file:
+      - ./.env
