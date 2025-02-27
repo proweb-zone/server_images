@@ -25,14 +25,16 @@ services:
       - ${INNER_PORT}:80
     volumes:
       - ./app:/var/www/images_server
-      - ./config/nginx/inner/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/inner/default.conf:/etc/nginx/conf.d/default.conf
       - ./logs/nginx:/var/log/nginx
     env_file:
       - ./.env
 
   php82:
     container_name: php82_img_server
-    image: php:8.2-fpm
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
       - "9000:9000"
     volumes:
