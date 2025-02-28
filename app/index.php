@@ -17,9 +17,6 @@ function __construct() {
   $this->folderSize = $_SERVER['folder_size'];
   $this->serverUrl = 'https://img.toledo24.pro/';
   $this->imagePath = __DIR__ . '/images/' . $this->folderSize . '/' . $this->fileName;
-
-  echo "111<pre>";
-  print_r($_SERVER);
   }
 
 function uploadImage(): string {
